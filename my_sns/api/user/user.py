@@ -1,14 +1,14 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from my_sns.models import Users
+from my_sns.models import User
 from my_sns.serializer import UserSerializer
 
 class User(APIView):
     
     def get(self, request):
         
-        from_db_user = Users.objects.filter(name=request.GET['name']).first()
+        from_db_user = User.objects.filter(name=request.GET['name']).first()
         
         if from_db_user :
             
