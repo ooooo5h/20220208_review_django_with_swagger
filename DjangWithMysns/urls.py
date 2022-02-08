@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from my_sns.api.user import User
 
 # swagger 관련 모듈 import
@@ -27,14 +27,20 @@ schema_view = get_schema_view(
     openapi.Info(
         title='장고 테스트 - MySNS',
         default_version='v1',
-        description='장고를 이용해서 생성했음'
+        description='장고를 이용해서 생성했음',
+        terms_of_service="https://google.com/policies/terms",
+        contact=openapi.Contact(name='Tester', email='test@test.com'),
+        license=openapi.License(name='TestLicense')
     ),
     public=True,
-    permission_classes=(AllowAny)   
+    permission_classes=(AllowAny,)   
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user', User.as_view(), name='user'),
+    re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name="schema-json"),
+    re_path(r'^api/docs$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
 
