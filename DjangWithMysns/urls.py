@@ -21,3 +21,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('user', User.as_view(), name='user'),
 ]
+
