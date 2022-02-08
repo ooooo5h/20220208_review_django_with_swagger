@@ -12,7 +12,7 @@ class FeedImages(models.Model):
 
 class FeedReplies(models.Model):
     feed = models.ForeignKey('Feeds', models.DO_NOTHING)
-    user = models.ForeignKey('User', models.DO_NOTHING)
+    user = models.ForeignKey('Users', models.DO_NOTHING)
     content = models.TextField()
     created_at = models.DateTimeField()
 
@@ -22,7 +22,7 @@ class FeedReplies(models.Model):
 
 
 class Feeds(models.Model):
-    user = models.ForeignKey('User', models.DO_NOTHING, blank=True, null=True)
+    user = models.ForeignKey('Users', models.DO_NOTHING, blank=True, null=True)
     lecture = models.ForeignKey('Lectures', models.DO_NOTHING, blank=True, null=True)
     content = models.TextField()
     created_at = models.DateTimeField()
@@ -33,7 +33,7 @@ class Feeds(models.Model):
 
 
 class LectureUser(models.Model):
-    user = models.ForeignKey('User', models.DO_NOTHING)
+    user = models.ForeignKey('Users', models.DO_NOTHING)
     lecture = models.ForeignKey('Lectures', models.DO_NOTHING)
     created_at = models.DateTimeField(blank=True, null=True)
 
@@ -46,14 +46,14 @@ class Lectures(models.Model):
     title = models.CharField(max_length=20)
     campus = models.CharField(max_length=10)
     fee = models.IntegerField()
-    teacher = models.ForeignKey('User', models.DO_NOTHING, blank=True, null=True)
+    teacher = models.ForeignKey('Users', models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'lectures'
 
 
-class User(models.Model):
+class Users(models.Model):
     email = models.CharField(max_length=50)
     password_hashed = models.CharField(max_length=32)
     name = models.CharField(max_length=20)
@@ -69,4 +69,4 @@ class User(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'user'
+        db_table = 'users'
