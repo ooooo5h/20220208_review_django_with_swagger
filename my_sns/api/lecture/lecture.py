@@ -4,8 +4,22 @@ from rest_framework.response import Response
 from my_sns.models import Lectures
 from my_sns.serializer import LectureSerializer
 
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+
 class Lecture(APIView):
     
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                'title',
+                openapi.IN_QUERY,
+                description='조회할 강의의 이름',
+                required=True,
+                type=openapi.TYPE_STRING,
+            ),
+        ]
+    )
     def get(self, request):
         
         from_db_lecture = Lectures.objects.filter(title=request.GET['title']).first()
